@@ -20,6 +20,7 @@ M.lsp_mappings = function(type)
   end
 
   inoremap({ "<C-s>", sig_help.signature_help, { silent = true } })
+  nnoremap({'gs', '<Cmd>lua vim.lsp.buf.formatting()<CR>'}, { slient = true })
   nnoremap({ "K", hover.render_hover_doc, { silent = true } })
   nnoremap({ "gd", provider.preview_definition, { silent = true } })
   nnoremap({ "<leader>gd", vim.lsp.buf.definition, { silent = true } })

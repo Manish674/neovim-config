@@ -25,3 +25,12 @@ wo.number = true
 wo.relativenumber = true
 wo.signcolumn = 'no'
 wo.wrap = false
+
+-- vim.cmd[[autocmd BufWritePre *js,*ts,*jsx,*tsx,*.graphql,*.json,*.md,*.mdx,*.svelte,*.yml,*yaml :Prettier]]
+vim.cmd([[autocmd BufWritePre * %s/\s\+$//e]])
+vim.cmd [[
+      augroup lsp_buf_format
+        au! BufWritePre <buffer>
+        autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()
+      augroup END
+    ]]

@@ -20,20 +20,22 @@ packer.startup(function()
   -- add you plugins here like: use 'neovim/nvim-lspconfig'
   use 'nvim-treesitter/nvim-treesitter'
   use 'sheerun/vim-polyglot'
-  
+
   -- colorschemes
   use 'folke/tokyonight.nvim'
   -- these are optional themes but I hear good things about gloombuddy ;)
   -- colorbuddy allows us to run the gloombuddy theme
-  use 'sainnhe/gruvbox-material' 
-  use 'tjdevries/colorbuddy.nvim'
+  use 'sainnhe/edge'
+  use 'arcticicestudio/nord-vim'
+  use 'sainnhe/gruvbox-material'
   use 'bkegley/gloombuddy'
 
+  -- use 'https://github.com/lukas-reineke/format.nvim.git'
 
   -- sneaking some formatting in here too
-  use {'prettier/vim-prettier', run = 'yarn install' }
+  -- use {'prettier/vim-prettier', run = 'npm install' }
 
-  --- astronauta to use nnoremap inoremap 
+  --- astronauta to use nnoremap inoremap
   use 'tjdevries/astronauta.nvim'
 
   -- lsp
@@ -45,29 +47,30 @@ packer.startup(function()
   use'kabouzeid/nvim-lspinstall'
 
   -- autocomplete
-  use 'hrsh7th/nvim-compe' 
+  use 'hrsh7th/nvim-compe'
   use 'hrsh7th/vim-vsnip'
-  
-  -- fuzzy finder telescope 
+
+  -- fuzzy finder telescope
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/telescope.nvim'
   use 'jremmen/vim-ripgrep'
- 
+
 
   -- ranger
   use 'kevinhwang91/rnvimr'
 
   -- file explorer
   use {
-    "kyazdani42/nvim-tree.lua",
-    -- cmd = "NvimTreeToggle",
-    config = function()
-      require("plugins/nvim-tree").config()
-    end,
+      'kyazdani42/nvim-tree.lua',
+      requires = 'kyazdani42/nvim-web-devicons',
+      config = function() require'nvim-tree'.setup {} end
   }
 
-  -- galaxyline 
+
+  -- use 'alvan/vim-closetag'
+
+  -- galaxyline
   use {
     'glepnir/galaxyline.nvim',
       branch = 'main',
@@ -75,11 +78,14 @@ packer.startup(function()
       requires = {'kyazdani42/nvim-web-devicons', opt = true}
   }
   -- auto pair
-  use 'windwp/nvim-autopairs' 
+  use 'windwp/nvim-autopairs'
 
-  -- colorizer 
+  -- auto closing and renaming tag
+  use 'windwp/nvim-ts-autotag'
+
+  -- colorizer
   use 'norcalli/nvim-colorizer.lua'
- 
+
   -- file bar ?
   use 'romgrk/barbar.nvim'
 
@@ -87,9 +93,5 @@ packer.startup(function()
   use 'tpope/vim-commentary'
   -- use 'https://github.com/Shougo/context_filetype.vim.git'
   -- use 'tyru/caw.vim'
-
-  use 'andweeb/presence.nvim'
-
-
   end
 )

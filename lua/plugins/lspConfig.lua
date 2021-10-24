@@ -42,6 +42,11 @@ local eslint = {
   lintFormats = { "%f:%l:%c: %m" },
 }
 
+local prettier = {
+  formatCommand = "prettier --stdin --stdin-filepath ${INPUT}",
+  formatStdin = true,
+}
+
 
 local denofmt = {
   formatCommand = "cat ${INPUT} | deno fmt -",
@@ -93,7 +98,7 @@ local servers = {
           recommendedVariantOrder = "warning"
         },
         validate = true
-      } 
+      }
     }
   },
 
@@ -118,9 +123,15 @@ local servers = {
   gopls = {
     root_dir = vim.loop.cwd,
   },
+
   efm = {
     cmd = { "efm-langserver" },
     on_attach = function(client)
+      vim.cmd 'augroup lsp_buf_format'
+      vim.cmd 'au!'
+      vim.cmd 'autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()'
+      vim.cmd 'augroup END'
+      -- vim.cmd [[:lua vim.lsp.buf.formatting_sync()]]
       client.resolved_capabilities.rename = false
       client.resolved_capabilities.hover = false
       client.resolved_capabilities.document_formatting = true
@@ -131,9 +142,9 @@ local servers = {
     settings = {
       rootMarkers = { ".git", "package.json" },
       languages = {
-        javascript = { eslint, denofmt },
-        typescript = { eslint, denofmt },
-        typescriptreact = { eslint },
+        javascript = { eslint, prettier },
+        typescript = { eslint, prettier },
+        typescriptreact = { eslint, prettier },
         svelte = { eslint },
       },
     },
@@ -257,23 +268,23 @@ vim.api.nvim_exec(
 
 
 local lspconfig = require'lspconfig'
-local configs = require'lspconfig/configs'    
+local configs = require'lspconfig/configs'
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-if not lspconfig.emmet_ls then    
-  configs.emmet_ls = {    
-    default_config = {    
+if not lspconfig.emmet_ls then
+  configs.emmet_ls = {
+    default_config = {
       cmd = {'emmet-ls', '--stdio'};
       filetypes = {'html', 'css', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact'};
-      root_dir = function(fname)    
+      root_dir = function(fname)
         return vim.loop.cwd()
-      end;    
-      settings = {};    
-    };    
-  }    
-end    
+      end;
+      settings = {};
+    };
+  }
+end
 lspconfig.emmet_ls.setup{ capabilities = capabilities; }
 
 local capba = vim.lsp.protocol.make_client_capabilities()
