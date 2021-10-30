@@ -1,307 +1,165 @@
-local nvim_lsp = require("lspconfig")
-local mappings = require("plugins/lspMappings")
-local is_cfg_present = require("utils").is_cfg_present
+local nvim_lsp = require('lspconfig')
+local protocol = require'vim.lsp.protocol'
 
-require("plugins/lspDiagnostic")
-require("lspsaga").init_lsp_saga({
-  border_style = 1,
-})
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-local custom_on_attach = function(client)
-  mappings.lsp_mappings()
+  --Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  if client.config.flags then
-    client.config.flags.allow_incremental_sync = true
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  --buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  --buf_set_keymap('i', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  --buf_set_keymap('n', '<C-j>', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', '<S-C-j>', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+
+  -- formatting
+  if client.name == 'tsserver' then
+    client.resolved_capabilities.document_formatting = false
   end
-end
 
-local custom_on_init = function()
-  print("Language Server Protocol started!")
-end
-
-local custom_capabilities = function()
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-  return capabilities
-end
-
--- use eslint if the eslint config file present
-local is_using_eslint = function(_, _, result, client_id)
-  if is_cfg_present("/.eslintrc.json") or is_cfg_present("/.eslintrc.js") then
-    return
+  if client.resolved_capabilities.document_formatting then
+    vim.api.nvim_command [[augroup Format]]
+    vim.api.nvim_command [[autocmd! * <buffer>]]
+    vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]]
+    vim.api.nvim_command [[augroup END]]
   end
 
-  return vim.lsp.handlers["textDocument/publishDiagnostics"](_, _, result, client_id)
-end
-
-local eslint = {
-  lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
-  lintIgnoreExitCode = true,
-  lintStdin = true,
-  lintFormats = { "%f:%l:%c: %m" },
-}
-
-local prettier = {
-  formatCommand = "prettier --stdin --stdin-filepath ${INPUT}",
-  formatStdin = true,
-}
-
-
-local denofmt = {
-  formatCommand = "cat ${INPUT} | deno fmt -",
-  formatStdin = true,
-}
-
-local sumneko_root = os.getenv("HOME") .. "/repos/lua-language-server"
-local servers = {
-  tsserver = {
-    filetypes = { "javascript", "javascriptreact" , "typescript", "typescriptreact" },
-    on_attach = function(client)
-      mappings.lsp_mappings()
-
-      if client.config.flags then
-        client.config.flags.allow_incremental_sync = true
-      end
-      client.resolved_capabilities.document_formatting = false
-    end,
-    init_options = {
-      documentFormatting = false,
-    },
-    handlers = {
-      ["textDocument/publishDiagnostics"] = is_using_eslint,
-    },
-    on_init = custom_on_init,
-    root_dir = vim.loop.cwd,
-  },
-  tailwindcssls = {
-    cmd = { "tailwindcss-language-server", "--stdio" },
-    filetypes = { "aspnetcorerazor", "astro", "astro-markdown", "blade", "django-html", "edge", "eelixir", "ejs", "erb", "eruby", "gohtml", "haml", "handlebars", "hbs", "html", "html-eex", "jade", "leaf", "liquid", "markdown", "mdx", "mustache", "njk", "nunjucks", "php", "razor", "slim", "twig", "css", "less", "postcss", "sass", "scss", "stylus", "sugarss", "javascript", "javascriptreact", "reason", "rescript", "typescript", "typescriptreact", "vue", "svelte" },
-   on_new_config = function(new_config)
-          if not new_config.settings then new_config.settings = {} end
-          if not new_config.settings.editor then new_config.settings.editor = {} end
-          if not new_config.settings.editor.tabSize then
-            -- set tab size for hover
-            new_config.settings.editor.tabSize = vim.lsp.util.get_effective_tabstop()
-          end
-        end,
-    root_dir = vim.loop.cwd,
-    settings = {
-      tailwindCSS = {
-        lint = {
-          cssConflict = "warning",
-          invalidApply = "error",
-          invalidConfigPath = "error",
-          invalidScreen = "error",
-          invalidTailwindDirective = "error",
-          invalidVariant = "error",
-          recommendedVariantOrder = "warning"
-        },
-        validate = true
-      }
-    }
-  },
-
-  emmetls = {
-    cmd = {'emmet-ls', '--stdio'};
-    filetypes = {'html', 'css', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact'};
-    root_dir = vim.loop.cwd
-  },
-
-  -- denols = {
-  --   filetypes = { "javascript", "typescript", "typescriptreact" },
-  --   root_dir = vim.loop.cwd,
-  --   settings = {
-  --     documentFormatting = false
-  --   }
-  -- },
-  html = {},
-  cssls = {},
-  intelephense = {},
-  rust_analyzer = {},
-  clangd = {},
-  gopls = {
-    root_dir = vim.loop.cwd,
-  },
-
-  efm = {
-    cmd = { "efm-langserver" },
-    on_attach = function(client)
-      vim.cmd 'augroup lsp_buf_format'
-      vim.cmd 'au!'
-      vim.cmd 'autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()'
-      vim.cmd 'augroup END'
-      -- vim.cmd [[:lua vim.lsp.buf.formatting_sync()]]
-      client.resolved_capabilities.rename = false
-      client.resolved_capabilities.hover = false
-      client.resolved_capabilities.document_formatting = true
-      client.resolved_capabilities.completion = false
-    end,
-    on_init = custom_on_init,
-    filetypes = { "javascript", "typescript", "typescriptreact", "svelte" },
-    settings = {
-      rootMarkers = { ".git", "package.json" },
-      languages = {
-        javascript = { eslint, prettier },
-        typescript = { eslint, prettier },
-        typescriptreact = { eslint, prettier },
-        svelte = { eslint },
-      },
-    },
-  },
-  svelte = {
-    on_attach = function(client)
-      mappings.lsp_mappings()
-
-      if client.config.flags then
-        client.config.flags.allow_incremental_sync = true
-      end
-      client.server_capabilities.completionProvider.triggerCharacters = {
-        ".",
-        "\"",
-        "'",
-        "`",
-        "/",
-        "@",
-        "*",
-        "#",
-        "$",
-        "+",
-        "^",
-        "(",
-        "[",
-        "-",
-        ":",
-      }
-    end,
-    handlers = {
-      ["textDocument/publishDiagnostics"] = is_using_eslint,
-    },
-    on_init = custom_on_init,
-    filetypes = { "svelte" },
-    settings = {
-      svelte = {
-        plugin = {
-          html = {
-            completions = {
-              enable = true,
-              emmet = true,
-            },
-          },
-          svelte = {
-            completions = {
-              enable = true,
-              emmet = false,
-            },
-            compilerWarnings = {
-              ["a11y-invalid-attribute"] = "ignore",
-            },
-          },
-          css = {
-            completions = {
-              enable = true,
-              emmet = false,
-            },
-          },
-        },
-      },
-    },
-  },
-  sumneko_lua = {
-    cmd = {
-      sumneko_root .. "/bin/Linux/lua-language-server",
-      "-E",
-      sumneko_root .. "/main.lua",
-    },
-    on_attach = custom_on_attach,
-    on_init = custom_on_init,
-    settings = {
-      Lua = {
-        runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },
-        diagnostics = {
-          enable = true,
-          globals = {
-            "vim",
-            "describe",
-            "it",
-            "before_each",
-            "after_each",
-            "awesome",
-            "theme",
-            "client",
-            "P",
-          },
-        },
-        workspace = {
-          preloadFileSize = 400,
-        },
-      },
-    },
-  },
-}
-
-for name, opts in ipairs(servers) do
-  local client = nvim_lsp[name]
-  client.setup({
-    cmd = opts.cmd or client.cmd,
-    filetypes = opts.filetypes or client.filetypes,
-    on_attach = opts.on_attach or require'completion'.custom_on_attach,
-    on_init = opts.on_init or custom_on_init,
-    handlers = opts.handlers or client.handlers,
-    root_dir = opts.root_dir or client.root_dir,
-    capabilities = opts.capabilities or custom_capabilities(),
-    settings = opts.settings or {},
-  })
-end
-
--- jdtls stuff
-vim.api.nvim_exec(
-  [[
-  augroup jdtls
-  au!
-  au FileType java lua require'jdtls'.start_or_attach({cmd = {'/home/elianiva/.scripts/run_jdtls'}, on_attach = require'modules.lsp._mappings'.lsp_mappings("jdtls")})
-  augroup END
-]],
-  false
-)
-
-
-
-local lspconfig = require'lspconfig'
-local configs = require'lspconfig/configs'
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-if not lspconfig.emmet_ls then
-  configs.emmet_ls = {
-    default_config = {
-      cmd = {'emmet-ls', '--stdio'};
-      filetypes = {'html', 'css', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact'};
-      root_dir = function(fname)
-        return vim.loop.cwd()
-      end;
-      settings = {};
-    };
+  --protocol.SymbolKind = { }
+  protocol.CompletionItemKind = {
+    '', -- Text
+    '', -- Method
+    '', -- Function
+    '', -- Constructor
+    '', -- Field
+    '', -- Variable
+    '', -- Class
+    'ﰮ', -- Interface
+    '', -- Module
+    '', -- Property
+    '', -- Unit
+    '', -- Value
+    '', -- Enum
+    '', -- Keyword
+    '﬌', -- Snippet
+    '', -- Color
+    '', -- File
+    '', -- Reference
+    '', -- Folder
+    '', -- EnumMember
+    '', -- Constant
+    '', -- Struct
+    '', -- Event
+    'ﬦ', -- Operator
+    '', -- TypeParameter
   }
 end
-lspconfig.emmet_ls.setup{ capabilities = capabilities; }
 
-local capba = vim.lsp.protocol.make_client_capabilities()
-capba.textDocument.completion.completionItem.snippetSupport = true
 
-local function setup_servers()
-  require'lspinstall'.setup()
-  local servers = require'lspinstall'.installed_servers()
-  for _, server in ipairs(servers) do
-    require'lspconfig'[server].setup{}
-  end
-end
+-- Set up completion using nvim_cmp with LSP source
+local capabilities = require('cmp_nvim_lsp').update_capabilities(
+  vim.lsp.protocol.make_client_capabilities()
+)
 
-setup_servers()
+nvim_lsp.flow.setup {
+  on_attach = on_attach,
+  capabilities = capabilities
+}
 
--- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-require'lspinstall'.post_install_hook = function ()
-  setup_servers() -- reload installed servers
-  vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
-end
+nvim_lsp.tsserver.setup {
+  on_attach = on_attach,
+  filetypes = {"javascriptreact", "javascript", "typescript", "typescriptreact", "typescript.tsx" },
+  capabilities = capabilities
+}
+
+nvim_lsp.diagnosticls.setup {
+  on_attach = on_attach,
+  filetypes = { 'javascript', 'javascriptreact', 'json', 'typescript', 'typescriptreact', 'css', 'less', 'scss', 'markdown', 'pandoc' },
+  init_options = {
+    linters = {
+      eslint = {
+        command = 'eslint_d',
+        rootPatterns = { '.git' },
+        debounce = 100,
+        args = { '--stdin', '--stdin-filename', '%filepath', '--format', 'json' },
+        sourceName = 'eslint_d',
+        parseJson = {
+          errorsRoot = '[0].messages',
+          line = 'line',
+          column = 'clumn',
+          endLine = 'endLine',
+          endColumn = 'endColumn',
+          message = '[eslint] ${message} [${ruleId}]',
+          security = 'severity'
+        },
+        securities = {
+          [2] = 'error',
+          [1] = 'warning'
+        }
+      },
+    },
+    filetypes = {
+      javascript = 'eslint',
+      javascriptreact = 'eslint',
+      typescript = 'eslint',
+      typescriptreact = 'eslint',
+    },
+    formatters = {
+      eslint_d = {
+        command = 'eslint_d',
+        rootPatterns = { '.git' },
+        args = { '--stdin', '--stdin-filename', '%filename', '--fix-to-stdout' },
+        rootPatterns = { '.git' },
+      },
+      prettier = {
+        command = 'prettier_d_slim',
+        rootPatterns = { '.git' },
+        -- requiredFiles: { 'prettier.config.js' },
+        args = { '--stdin', '--stdin-filepath', '%filename' }
+      }
+    },
+    formatFiletypes = {
+      css = 'prettier',
+      javascript = 'prettier',
+      javascriptreact = 'prettier',
+      json = 'prettier',
+      scss = 'prettier',
+      less = 'prettier',
+      typescript = 'prettier',
+      typescriptreact = 'prettier',
+      json = 'prettier',
+      markdown = 'prettier',
+    }
+  }
+}
+
+-- icon
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    underline = true,
+    -- This sets the spacing and the prefix, obviously.
+    virtual_text = {
+      spacing = 4,
+      prefix = ''
+    }
+  }
+)

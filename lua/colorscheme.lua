@@ -1,5 +1,5 @@
 vim.g.gruvbox_material_transparent_background = 1
-vim.cmd[[colo gruvbox-material]]
+vim.cmd[[colo doom-one]]
 
 -- vim.g.edge_style = 'neon'
 -- vim.g.edge_transparent_background = 1
