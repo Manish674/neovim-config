@@ -8,12 +8,17 @@ if fn.empty(fn.glob(install_path)) > 0 then
     execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
     execute 'packadd packer.nvim'
 end
+
 vim.cmd('packadd packer.nvim')
+
 local packer = require'packer'
+
 local util = require'packer.util'
+
 packer.init({
   package_root = util.join_paths(vim.fn.stdpath('data'), 'site', 'pack')
 })
+
 --- startup and add configure plugins
 packer.startup(function()
   local use = use
@@ -28,6 +33,7 @@ packer.startup(function()
   use 'sainnhe/edge'
   use 'arcticicestudio/nord-vim'
   use 'sainnhe/gruvbox-material'
+  use 'gruvbox-community/gruvbox'
   use 'bkegley/gloombuddy'
 
   -- use 'https://github.com/lukas-reineke/format.nvim.git'
@@ -45,6 +51,9 @@ packer.startup(function()
   use { "mfussenegger/nvim-jdtls", opt = false } -- jdtls
   use { "tami5/sql.nvim", opt = false } -- sql bindings in LuaJIT
   use'kabouzeid/nvim-lspinstall'
+
+  use "jose-elias-alvarez/null-ls.nvim" 
+  use "jose-elias-alvarez/nvim-lsp-ts-utils"
 
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
@@ -98,6 +107,8 @@ packer.startup(function()
   use 'romgrk/barbar.nvim'
 
   use {'lourenci/github-colors', branch = 'main'}
+
+  use 'mhartington/formatter.nvim'
 
   use({
     'NTBBloodbath/doom-one.nvim',

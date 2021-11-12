@@ -25,11 +25,3 @@ wo.number = true
 wo.relativenumber = true
 wo.signcolumn = 'no'
 wo.wrap = false
-
--- vim.cmd[[autocmd BufWritePre *js,*ts,*jsx,*tsx,*.graphql,*.json,*.md,*.mdx,*.svelte,*.yml,*yaml :Prettier]]
-vim.cmd([[autocmd BufWritePre * %s/\s\+$//e]])
-
--- augroup fmt
---   autocmd!
---   autocmd BufWritePre * undojoin | Neoformat
--- augroup END

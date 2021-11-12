@@ -1,3 +1,18 @@
+require('formatter').setup({
+  logging = false,
+  filtype = {
+    javascript = {
+      function()
+        return {
+          exe = "prettierd",
+          args = {vim.api.nvim_buf_get_name(0)},
+          stdin = true
+        }
+      end
+    }
+  }
+})
+
 vim.g.mapleader = " "
 
 local key_mapper = function(mode, key, result)
@@ -46,7 +61,7 @@ key_mapper('n', '<leader>fs', ':lua require"telescope.builtin".live_grep()<CR>')
 key_mapper('n', '<leader>fh', ':lua require"telescope.builtin".help_tags()<CR>')
 key_mapper('n', '<leader>fb', ':lua require"telescope.builtin".buffers()<CR>')
 
--- file explorer nvim-tree 
+-- file explorer nvim-tree
 key_mapper('n', '<leader>e', ':NvimTreeToggle<CR>')
 
 -- change between tabs
