@@ -26,6 +26,8 @@ packer.startup(function()
   use 'nvim-treesitter/nvim-treesitter'
   use 'sheerun/vim-polyglot'
 
+  -- copilot 
+  use 'github/copilot.vim'
   -- colorschemes
   use 'folke/tokyonight.nvim'
   -- these are optional themes but I hear good things about gloombuddy ;)
@@ -142,6 +144,9 @@ packer.startup(function()
         })
     end,
   })
+
+  -- Github
+  use 'tpope/vim-fugitive'
 
   --vim-commentary
   use 'tpope/vim-commentary'

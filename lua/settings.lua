@@ -25,3 +25,4 @@ wo.number = true
 wo.relativenumber = true
 wo.signcolumn = 'no'
 wo.wrap = false
+vim.cmd[[set cursorline]]

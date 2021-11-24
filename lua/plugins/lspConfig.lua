@@ -59,5 +59,9 @@ require'lspconfig'.cssls.setup {
   capabilities = capabilities,
 }
 
+require'lspconfig'.tailwindcss.setup{}
+
 require("null-ls").config({})
 lspconfig["null-ls"].setup({ on_attach = on_attach })
+
+
