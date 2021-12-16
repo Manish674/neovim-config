@@ -28,10 +28,12 @@ packer.startup(function()
 
   -- copilot 
   use 'github/copilot.vim'
+
   -- colorschemes
   use 'folke/tokyonight.nvim'
   -- these are optional themes but I hear good things about gloombuddy ;)
   -- colorbuddy allows us to run the gloombuddy theme
+  
   use 'sainnhe/edge'
   use 'arcticicestudio/nord-vim'
   use 'sainnhe/gruvbox-material'
@@ -57,11 +59,14 @@ packer.startup(function()
   use "jose-elias-alvarez/null-ls.nvim" 
   use "jose-elias-alvarez/nvim-lsp-ts-utils"
 
+  use 'onsails/lspkind-nvim'
+
+  use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-cmdline'
-  use 'hrsh7th/nvim-cmp'
+
 
   use 'hrsh7th/cmp-vsnip'
   use 'hrsh7th/vim-vsnip'
