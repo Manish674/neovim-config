@@ -67,11 +67,7 @@ packer.startup(function()
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-cmdline'
 
-
   use 'hrsh7th/cmp-vsnip'
-  use 'hrsh7th/vim-vsnip'
-
-  -- autocomplete
   use 'hrsh7th/vim-vsnip'
 
   -- fuzzy finder telescope
