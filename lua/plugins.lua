@@ -54,7 +54,11 @@ packer.startup(function()
   use 'glepnir/lspsaga.nvim';
   use { "mfussenegger/nvim-jdtls", opt = false } -- jdtls
   use { "tami5/sql.nvim", opt = false } -- sql bindings in LuaJIT
-  use'kabouzeid/nvim-lspinstall'
+   use {
+      'neovim/nvim-lspconfig',
+      'williamboman/nvim-lsp-installer',
+  } 
+  -- use'kabouzeid/nvim-lspinstall'
 
   use "jose-elias-alvarez/null-ls.nvim" 
   use "jose-elias-alvarez/nvim-lsp-ts-utils"

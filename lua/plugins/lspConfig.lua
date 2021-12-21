@@ -97,3 +97,4 @@ require'lspconfig'.tailwindcss.setup{
    capabilities = capabilities,
 }
 
+require'lspconfig'.jedi_language_server.setup{}

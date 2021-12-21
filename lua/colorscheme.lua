@@ -1,6 +1,7 @@
 -- vim.g.gruvbox_material_transparent_background = 1
-vim.cmd[[colo gruvbox]]
+-- vim.cmd[[colo gruvbox]]
 
+vim.cmd[[ colo tokyonight]]
 -- vim.g.edge_style = 'neon'
 -- vim.g.edge_transparent_background = 1
 -- vim.g.tokyonight_style='storm'

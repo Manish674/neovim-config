@@ -22,7 +22,7 @@
         fallback()
       end
     end,
-    ['<Space>'] = cmp.mapping.close(),
+    -- ['<Space>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
