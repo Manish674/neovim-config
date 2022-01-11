@@ -26,6 +26,9 @@ packer.startup(function()
   use 'nvim-treesitter/nvim-treesitter'
   use 'sheerun/vim-polyglot'
 
+  -- markdown preview
+  use 'iamcco/markdown-preview.nvim'
+
   -- copilot 
   use 'github/copilot.vim'
 

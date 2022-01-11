@@ -43,6 +43,7 @@ key_mapper('n', '<C-k>', '<C-w>k')
 
 -- Git 
 key_mapper('n', '<leader>gs', ':G<CR>')
+key_mapper('n', '<leader>gc', ':Git commit<CR>')
 
 -- lsp
 key_mapper('n', 'gd', ':lua vim.lsp.buf.definition()<CR>')

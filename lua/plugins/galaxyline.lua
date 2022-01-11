@@ -1,8 +1,9 @@
+-- NEW CONFIG STARTS HERE -- 
 local gl = require('galaxyline')
 local fileinfo = require('galaxyline.provider_fileinfo')
 -- get my theme in galaxyline repo
 -- local colors = require('galaxyline.theme').default
-local colors = {
+local some_colors = {
     -- bg = '#2E2E2E',
     bg = '#292D38',
     yellow = '#DCDCAA',
@@ -28,49 +29,51 @@ local colors = {
 -- to 'colors' to enable.
 
 -- Colors for Gruvbox
--- local colors_gruvbox = {
---     bg = '#32302F',
---     yellow = '#FABD2F',
---     dark_yellow = '#D79921',
---     cyan = '#689D6A',
---     green = '#608B4E',
---     light_green = '#B8BB26',
---     string_orange = '#D65D0E',
---     orange = '#FE8019',
---     purple = '#B16286',
---     magenta = '#D3869B',
---     grey = '#A89984',
---     blue = '#458588',
---     -- vivid_blue = '#4FC1FF',
---     light_blue = '#83A598',
---     red = '#FB4834',
---     error_red = '#CC241D',
---     info_yellow = '#D79921'
--- }
+local other_colors = {
+    bg = '#32302F',
+    yellow = '#FABD2F',
+    dark_yellow = '#D79921',
+    cyan = '#689D6A',
+    green = '#608B4E',
+    light_green = '#B8BB26',
+    string_orange = '#D65D0E',
+    orange = '#FE8019',
+    purple = '#B16286',
+    magenta = '#D3869B',
+    grey = '#A89984',
+    blue = '#458588',
+    -- vivid_blue = '#4FC1FF',
+    light_blue = '#83A598',
+    red = '#FB4834',
+    error_red = '#CC241D',
+    info_yellow = '#D79921'
+}
+
 -- colors for NVCode theme (very minimal changes)
--- local colors_nvcode = {
---     bg = '#2E2E2E',
---     yellow = '#DCDCAA',
---     dark_yellow = '#D7BA7D',
---     cyan = '#4EC9B0',
---     green = '#608B4E',
---     light_green = '#B5CEA8',
---     string_orange = '#CE9178',
---     orange = '#FF8800',
---     purple = '#C586C0',
---     magenta = '#D16D9E',
---     grey = '#729CB3',
---     blue = '#569CD6',
---     vivid_blue = '#4FC1FF',
---     light_blue = '#9CDCFE',
---     red = '#D16969',
---     error_red = '#F44747',
---     info_yellow = '#FFCC66'
--- }
+local colors = {
+    bg = '#2E2E2E',
+    yellow = '#DCDCAA',
+    dark_yellow = '#D7BA7D',
+    cyan = '#4EC9B0',
+    green = '#608B4E',
+    light_green = '#B5CEA8',
+    string_orange = '#CE9178',
+    orange = '#FF8800',
+    purple = '#C586C0',
+    magenta = '#D16D9E',
+    grey = '#729CB3',
+    blue = '#569CD6',
+    vivid_blue = '#4FC1FF',
+    light_blue = '#9CDCFE',
+    red = '#D16969',
+    error_red = '#F44747',
+    info_yellow = '#FFCC66'
+}
 
 local condition = require('galaxyline.condition')
 local gls = gl.section
 gl.short_line_list = {'NvimTree', 'vista', 'dbui', 'packer'}
+
 
 table.insert(gls.left, {
     ViMode = {
