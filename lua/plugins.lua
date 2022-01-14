@@ -34,26 +34,23 @@ packer.startup(function()
 
   -- colorschemes
   use 'folke/tokyonight.nvim'
-  -- these are optional themes but I hear good things about gloombuddy ;)
-  -- colorbuddy allows us to run the gloombuddy theme
-  
   use 'sainnhe/edge'
   use 'arcticicestudio/nord-vim'
   use 'sainnhe/gruvbox-material'
   use 'gruvbox-community/gruvbox'
   use 'bkegley/gloombuddy'
-
+  use "marko-cerovac/material.nvim" 
   -- use 'https://github.com/lukas-reineke/format.nvim.git'
 
   -- sneaking some formatting in here too
   -- use {'prettier/vim-prettier', run = 'npm install' }
-  use 'sbdchd/neoformat'
+  -- use 'sbdchd/neoformat'
 
   --- astronauta to use nnoremap inoremap
   use 'tjdevries/astronauta.nvim'
 
   -- lsp
-  use 'neovim/nvim-lspconfig'
+  -- use 'neovim/nvim-lspconfig'
   use 'glepnir/lspsaga.nvim';
   use { "mfussenegger/nvim-jdtls", opt = false } -- jdtls
   use { "tami5/sql.nvim", opt = false } -- sql bindings in LuaJIT
@@ -96,14 +93,18 @@ packer.startup(function()
 
 
   -- use 'alvan/vim-closetag'
+  use {
+  'nvim-lualine/lualine.nvim',
+  requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
 
   -- galaxyline
-  use {
-    'glepnir/galaxyline.nvim',
-      branch = 'main',
-      config = function() require'plugins/galaxyline' end,
-      requires = {'kyazdani42/nvim-web-devicons', opt = true}
-  }
+  -- use {
+  --   'glepnir/galaxyline.nvim',
+  --     branch = 'main',
+  --     config = function() require'plugins/galaxyline' end,
+  --     requires = {'kyazdani42/nvim-web-devicons', opt = true}
+  -- }
   -- auto pair
   use 'windwp/nvim-autopairs'
 
@@ -120,39 +121,42 @@ packer.startup(function()
 
   use 'mhartington/formatter.nvim'
 
-  use({
-    'NTBBloodbath/doom-one.nvim',
-    config = function()
-        require('doom-one').setup({
-            cursor_coloring = false,
-            terminal_colors = false,
-            italic_comments = false,
-            enable_treesitter = true,
-            transparent_background = true,
-            pumblend = {
-                enable = true,
-                transparency_amount = 20,
-            },
-            plugins_integrations = {
-                neorg = true,
-                barbar = true,
-                bufferline = false,
-                gitgutter = false,
-                gitsigns = true,
-                telescope = false,
-                neogit = true,
-                nvim_tree = true,
-                dashboard = true,
-                startify = true,
-                whichkey = true,
-                indent_blankline = true,
-                vim_illuminate = true,
-                lspsaga = false,
-            },
-        })
-    end,
-  })
+  -- use({
+  --   'NTBBloodbath/doom-one.nvim',
+  --   config = function()
+  --       require('doom-one').setup({
+  --           cursor_coloring = false,
+  --           terminal_colors = false,
+  --           italic_comments = false,
+  --           enable_treesitter = true,
+  --           -- transparent_background = true,
+  --           pumblend = {
+  --               enable = true,
+  --               transparency_amount = 20,
+  --           },
+  --           plugins_integrations = {
+  --               neorg = true,
+  --               barbar = true,
+  --               bufferline = false,
+  --               gitgutter = false,
+  --               gitsigns = true,
+  --               telescope = false,
+  --               neogit = true,
+  --               nvim_tree = true,
+  --               dashboard = true,
+  --               startify = true,
+  --               whichkey = true,
+  --               indent_blankline = true,
+  --               vim_illuminate = true,
+  --               lspsaga = false,
+  --           },
+  --       })
+  --   end,
+  -- })
 
+  -- indent
+  use "lukas-reineke/indent-blankline.nvim"
+  
   -- Github
   use 'tpope/vim-fugitive'
 
