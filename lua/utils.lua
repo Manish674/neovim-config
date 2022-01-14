@@ -1,5 +1,6 @@
 local Job = require("plenary.job")
 local fn = vim.fn
+local something = 'this is a strng'
 
 _G.Util = {}
 

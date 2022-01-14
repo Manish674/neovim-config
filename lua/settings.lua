@@ -4,7 +4,6 @@ local wo=vim.wo
 
 o.termguicolors = true
 o.syntax = 'on'
-
 o.errorbells = false
 o.smartcase = true
 o.showmode = false
@@ -25,4 +24,5 @@ wo.number = true
 wo.relativenumber = true
 wo.signcolumn = 'no'
 wo.wrap = false
+
 vim.cmd[[set cursorline]]

@@ -1,34 +1,22 @@
--- local g = vim.g
--- vim.cmd[[colo edge]]
 
--- Set the theme style
+require('material').setup({
+	contrast = {
+			sidebars = true, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
+			floating_windows = true, -- Enable contrast for floating windows
+			line_numbers = true, -- Enable contrast background for line numbers
+			sign_column = false, -- Enable contrast background for the sign column
+			cursor_line = true, -- Enable darker background for the cursor line
+			non_current_windows = false, -- Enable darker background for non-current windows
+			popup_menu = false, -- Enable lighter background for the popup menu
+	},
+  italics = {
+			comments = true, -- Enable italic comments
+			keywords = true, -- Enable italic keywords
+			functions = true, -- Enable italic functions
+			strings = true, -- Enable italic strings
+			variables = true -- Enable italic variables
+		},
+  })
+
 vim.g.material_style = "darker"
-
--- Enable italic comments
-vim.g.material_italic_comments = true
-
--- Enable italic keywords
-vim.g.material_italic_keywords = true
-
--- Enable italic function names
-vim.g.material_italic_functions = true
-
--- Enable italic variable names
-vim.g.material_italic_variables = false
-
--- Enable high contrast
-vim.g.material_contrast = true
-
--- Enable borders
-vim.g.material_borders = false
-
--- Enable terminal background
-vim.g.material_disable_background = false
-
-
--- Toggle the style live
-vim.api.nvim_set_keymap('n', '<leader>mm', [[<Cmd>lua require('material.functions').toggle_style()<CR>]], { noremap = true, silent = true })
-
--- Enable the colorscheme
-vim.cmd[[colorscheme material]]
-
+vim.cmd[[colo material]]
