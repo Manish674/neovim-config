@@ -68,9 +68,11 @@ key_mapper('n', '<leader>fb', ':lua require"telescope.builtin".buffers()<CR>')
 -- file explorer nvim-tree
 key_mapper('n', '<leader>e', ':NvimTreeToggle<CR>')
 
+-- barbar
 -- change between tabs
 key_mapper('n', '<Tab>', ':bnext<CR>')
 key_mapper('n', '<S-Tab>', ':bprevious<CR>')
+key_mapper('n', '<leader>bb', ':BufferCloseAllButCurrent<CR>')
 
 
 -- commenting
