@@ -163,6 +163,7 @@ packer.startup(function()
   --vim-commentary
   use 'tpope/vim-commentary'
 
+  use 'andweeb/presence.nvim'
   -- use 'https://github.com/Shougo/context_filetype.vim.git'
   -- use 'tyru/caw.vim'
   end

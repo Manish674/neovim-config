@@ -12,4 +12,6 @@ require('plugins/telescope')
 require('plugins/nvimTree')
 -- using lualine instead of galaxyline
 require('plugins/galaxyline')
+require('plugins/discord')
 require('colorscheme')
+
