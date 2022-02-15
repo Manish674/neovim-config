@@ -117,7 +117,8 @@ packer.startup(function()
   -- file bar ?
   use 'romgrk/barbar.nvim'
 
-  use {'lourenci/github-colors', branch = 'main'}
+  -- use {'lourenci/github-colors', branch = 'main'}
+  use "projekt0n/github-nvim-theme"
 
   use 'mhartington/formatter.nvim'
 
@@ -168,4 +169,3 @@ packer.startup(function()
   -- use 'tyru/caw.vim'
   end
 )
-

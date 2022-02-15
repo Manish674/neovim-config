@@ -1,5 +1,10 @@
 vim.g.material_style = "darker"
 
+require("github-theme").setup({
+  theme_style = "dimmed",
+  -- other config
+})
+
 require('material').setup({
 	
 	contrast = {
@@ -32,4 +37,5 @@ tokyonight_dark_sidebar = true
 -- Change the "hint" color to the "orange" color, and make the "error" color bright red
 vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
 
-vim.cmd[[colo tokyonight]]
+-- vim.cmd[[colo tokyonight]]
+
