@@ -13,5 +13,6 @@ require('plugins/nvimTree')
 -- using lualine instead of galaxyline
 require('plugins/galaxyline')
 require('plugins/discord')
+-- require('plugins/indent')
+-- require('plugins/gitsigns')
 require('colorscheme')
-

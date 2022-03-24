@@ -22,6 +22,7 @@ packer.init({
 --- startup and add configure plugins
 packer.startup(function()
   local use = use
+  
   -- add you plugins here like: use 'neovim/nvim-lspconfig'
   use 'nvim-treesitter/nvim-treesitter'
   use 'sheerun/vim-polyglot'
@@ -72,7 +73,17 @@ packer.startup(function()
   use 'hrsh7th/cmp-cmdline'
 
   use 'hrsh7th/cmp-vsnip'
-  use 'hrsh7th/vim-vsnip'
+  -- use 'hrsh7th/vim-vsnip'
+  -- use 'quangnguyen30192/cmp-nvim-ultisnips'
+  use 'honza/vim-snippets'
+  use { 'https://github.com/L3MON4D3/LuaSnip.git' }
+  use({
+      "SirVer/ultisnips",
+      requires = "honza/vim-snippets",
+      config = function()
+        vim.g.UltiSnipsRemoveSelectModeMappings = 0
+      end,
+    })
 
   -- fuzzy finder telescope
   use 'nvim-lua/popup.nvim'
@@ -163,6 +174,8 @@ packer.startup(function()
 
   --vim-commentary
   use 'tpope/vim-commentary'
+
+  use 'https://github.com/airblade/vim-gitgutter.git'
 
   use 'andweeb/presence.nvim'
   -- use 'https://github.com/Shougo/context_filetype.vim.git'

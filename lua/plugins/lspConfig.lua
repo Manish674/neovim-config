@@ -101,6 +101,25 @@ nvim_lsp.tailwindcss.setup {
   capabilities = capabilities
 }
 
+nvim_lsp.prismals.setup {
+  on_attach = on_attach,
+  -- filetypes = { "sql" },
+  capabilities = capabilities
+}
+
+nvim_lsp.sqlls.setup {
+  on_attach = on_attach,
+  -- filetypes = { "sql" },
+  capabilities = capabilities
+}
+
+--~/.local/share/nvim/lsp_servers/rust 
+nvim_lsp.rust_analyzer.setup {
+  on_attach = on_attach,
+  filetypes = {"rust"},
+  capabilities = capabilities
+}
+
 -- nvim_lsp.diagnosticls.setup {
 --   on_attach = on_attach,
 --   filetypes = { 'javascript', 'javascriptreact', 'json', 'typescript', 'typescriptreact', 'css', 'less', 'scss', 'markdown', 'pandoc' },
