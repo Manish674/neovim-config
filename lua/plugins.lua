@@ -48,7 +48,7 @@ packer.startup(function()
   -- use 'sbdchd/neoformat'
 
   --- astronauta to use nnoremap inoremap
-  use 'tjdevries/astronauta.nvim'
+  -- use 'tjdevries/astronauta.nvim'
 
   -- lsp
   -- use 'neovim/nvim-lspconfig'
@@ -77,19 +77,20 @@ packer.startup(function()
   -- use 'quangnguyen30192/cmp-nvim-ultisnips'
   use 'honza/vim-snippets'
   use { 'https://github.com/L3MON4D3/LuaSnip.git' }
-  use({
-      "SirVer/ultisnips",
-      requires = "honza/vim-snippets",
-      config = function()
-        vim.g.UltiSnipsRemoveSelectModeMappings = 0
-      end,
-    })
+  -- use({
+  --     "SirVer/ultisnips",
+  --     requires = "honza/vim-snippets",
+  --     config = function()
+  --       vim.g.UltiSnipsRemoveSelectModeMappings = 0
+  --     end,
+  --   })
 
   -- fuzzy finder telescope
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/telescope.nvim'
-  use 'jremmen/vim-ripgrep'
+  -- use 'jremmen/vim-ripgrep'
+  use 'BurntSushi/ripgrep'
 
 
   -- ranger
