@@ -91,7 +91,7 @@ nvim_lsp.tsserver.setup {
 
 nvim_lsp.cssls.setup {
   on_attach = on_attach,
-  filetypes = { "css" },
+  filetypes = { "css", "scss" },
   capabilities = capabilities
 }
 
