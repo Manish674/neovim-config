@@ -38,7 +38,7 @@ tokyonight_lualine_bold = true
 -- Change the "hint" color to the "orange" color, and make the "error" color bright red
 vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
 
-vim.cmd[[colo tokyonight]]
+-- vim.cmd[[colo tokyonight]]
 
 -- gray
 vim.cmd[[highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#808080]]
@@ -56,3 +56,5 @@ vim.cmd[[highlight! CmpItemKindMethod guibg=NONE guifg=#C586C0]]
 vim.cmd[[highlight! CmpItemKindKeyword guibg=NONE guifg=#D4D4D4]]
 vim.cmd[[highlight! CmpItemKindProperty guibg=NONE guifg=#D4D4D4]]
 vim.cmd[[highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4]]
+
+vim.cmd.colorscheme "desert"

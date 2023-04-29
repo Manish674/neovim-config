@@ -2,6 +2,7 @@ local o=vim.o
 local bo=vim.bo
 local wo=vim.wo
 
+vim.cmd[[set guicursor=i:hor20]]
 o.termguicolors = true
 o.syntax = 'on'
 o.errorbells = false
@@ -24,5 +25,5 @@ wo.number = true
 wo.relativenumber = true
 wo.signcolumn = 'no'
 wo.wrap = false
-
-vim.cmd[[set cursorline]]
+o.scrolloff = 5
+-- vim.cmd[[set cursorline]]

@@ -30,6 +30,9 @@ packer.startup(function()
   -- markdown preview
   use 'iamcco/markdown-preview.nvim'
 
+  -- colorscheme
+  use { "catppuccin/nvim", as = "catppuccin" }
+
   -- copilot 
   use 'github/copilot.vim'
 
@@ -119,6 +122,7 @@ packer.startup(function()
   -- }
   -- auto pair
   use 'windwp/nvim-autopairs'
+  -- use 'tmsvg/pear-tree'
 
   -- auto closing and renaming tag
   use 'windwp/nvim-ts-autotag'
@@ -177,9 +181,5 @@ packer.startup(function()
   use 'tpope/vim-commentary'
 
   use 'https://github.com/airblade/vim-gitgutter.git'
-
-  use 'andweeb/presence.nvim'
-  -- use 'https://github.com/Shougo/context_filetype.vim.git'
-  -- use 'tyru/caw.vim'
   end
 )
