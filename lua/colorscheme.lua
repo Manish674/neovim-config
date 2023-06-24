@@ -57,4 +57,4 @@ vim.cmd[[highlight! CmpItemKindKeyword guibg=NONE guifg=#D4D4D4]]
 vim.cmd[[highlight! CmpItemKindProperty guibg=NONE guifg=#D4D4D4]]
 vim.cmd[[highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4]]
 
-vim.cmd.colorscheme "desert"
+vim.cmd.colorscheme "gruvbox"

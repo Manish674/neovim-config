@@ -43,41 +43,7 @@ local on_attach = function(client, bufnr)
     client.server_capabilities.document_formatting = true
   end
 
-  -- if client.server_capabilities.document_formatting then
-  --   vim.api.nvim_command [[augroup Format]]
-  --   vim.api.nvim_command [[autocmd! * <buffer>]]
-  --   vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()]]
-  --   vim.api.nvim_command [[augroup END]]
-  -- end
-
   --protocol.SymbolKind = { }
-  protocol.CompletionItemKind = {
-    '', -- Text
-    '', -- Method
-    '', -- Function
-    '', -- Constructor
-    '', -- Field
-    '', -- Variable
-    '', -- Class
-    'ﰮ', -- Interface
-    '', -- Module
-    '', -- Property
-    '', -- Unit
-    '', -- Value
-    '', -- Enum
-    '', -- Keyword
-    '﬌', -- Snippet
-    '', -- Color
-    '', -- File
-    '', -- Reference
-    '', -- Folder
-    '', -- EnumMember
-    '', -- Constant
-    '', -- Struct
-    '', -- Event
-    'ﬦ', -- Operator
-    '', -- TypeParameter
-  }
 end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities(
@@ -96,13 +62,19 @@ nvim_lsp.cssls.setup {
   capabilities = capabilities
 }
 
--- nvim_lsp.tailwindcss.setup {
---   on_attach = on_attach,
---   filetypes = { "typescript", "typescriptreact","javascript", "javascriptreact", "typescript.tsx" },
---   capabilities = capabilities
--- }
+nvim_lsp.tailwindcss.setup {
+  on_attach = on_attach,
+  filetypes = { "typescript", "typescriptreact","javascript", "javascriptreact", "typescript.tsx" },
+  capabilities = capabilities
+}
 
 nvim_lsp.prismals.setup {
+  on_attach = on_attach,
+  -- filetypes = { "sql" },
+  capabilities = capabilities
+}
+
+nvim_lsp.pylsp.setup {
   on_attach = on_attach,
   -- filetypes = { "sql" },
   capabilities = capabilities

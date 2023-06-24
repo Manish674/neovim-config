@@ -16,3 +16,4 @@ require('plugins/discord')
 -- require('plugins/indent')
 -- require('plugins/gitsigns')
 require('colorscheme')
+
