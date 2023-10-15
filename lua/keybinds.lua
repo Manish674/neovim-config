@@ -6,9 +6,13 @@ vim.keymap.set('n', '<leader>fs', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
+options = { noremap = true }
+
+-- Vim fugitive (git) 
+vim.keymap.set('n', '<leader>gs', ':Git<cr>', options)
+vim.keymap.set('n', '<leader>gc', ':Git commit<cr>', options)
 
 -- file tree 
-options = { noremap = true }
 vim.api.nvim_set_keymap('n', '<leader>e', ':Lexplore<cr>', options)
 
 -- Lsp Diagnostic
