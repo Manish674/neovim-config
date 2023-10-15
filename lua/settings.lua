@@ -21,18 +21,19 @@ o.shiftwidth = 2
 o.expandtab = true
 o.scrolloff = 5
 
+
 bo.swapfile = false
 bo.autoindent = true
 bo.smartindent = true
 
-wo.signcolumn = 'no'
+wo.signcolumn = 'yes:1'
 wo.wrap = false
 
-vim.g.mapleader = ' '
-vim.g.colorscheme = "default"
 
-options = { noremap = true }
-vim.api.nvim_set_keymap('n', '<leader>e', ':Lexplore<cr>', options)
+-- colorscheme
+vim.cmd([[colorscheme gruvbox]])
+o.background = 'dark'
 
 
+vim.cmd[[highlight SignColumn guibg=default]]
 
